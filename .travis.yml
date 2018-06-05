@@ -1,0 +1,15 @@
+branches:
+  only:
+  - master
+language: python
+python: 3.5
+install: pip install awscli
+script:
+- aws s3 sync --exclude '.git/*' --exclude 'README.md' --exclude '.travis.yml' --exclude
+  '.gitignore' --exclude 'upload.sh' --acl public-read --delete . s3://www.samthrasher.com
+- aws configure set preview.cloudfront true
+- aws cloudfront create-invalidation --distribution-id E23C914E5SL3KK --paths '/*'
+env:
+  global:
+  - secure: F4neyvz+2vaKc5WmkU1BkFRmB3k3ITRXO78T+EG0LZFeRv1d1izyQD8REDJCZBvBZJVb0OJ7fXOGKmbMgYOi6Nmx3/P5dLIy4bOjuYL2W1tQAgMQ1r34ZcGl+m82fj0yvLXPY4PQWwQAruWGhtrI6Mzt0op8XOy5xsDEMOQZ6aOvK2uNvCzVTErhBYNGo8yEzbU2UkIoPT/yUUApbqMf6MfdLZLqrGXFRsLJ7mtVMH76Jrg6gx70mgB4qlHWcCVACeF+Tguy20gytemFrmqz4sWhlVh7uQhLgg1QLx22LuwKg3lCFWD7N9tz5Z3rY3M04z5Xky7p4eg9tWU0/Tojycguwrvc1k0rLYuQFjloh5ZKoruEzMfO/06sKRHooHE8qYAtIZtbvyOFXsLTT6KP3o1lA0qxCUNkBCzcc2MC3XTL9tlX8L3TNp3Fd7nKsl5TmXoiqYPn/Ptu5jqGm8rP3ix/H5b2nLUK2vBVBwrsJmSGlHQLAkxBaJAYDV2cbTxZbQYaNBZ5oyxLKV28aABZUVuz10gRYP9hSY1lvluiPQ3wm7wrbMcgxKzMNUkygGz9PDkrTzb6yBOdULZcLZDgpneQohaPepnwojnj2l8wOaoLt+i+PE6gk87gm02Qfx/dvyiFZpdRZJasfWL7VzqgmSE3Vu2tb0PY6MMksA0VYrI=
+  - secure: L1ZqWVJwavXeVy9EfLWaWw+VEX+XqtEIkDZ/UfxQLs66ru7Hv7KYQGSqM77RM8du/t2Takuaae8G4e3M0Syqz9IfB11kQflzo05ITMiODqU9+ZBpT8HyhROflJXebStRtFNwbaSXYvtILmmoe60JEXcpFN/psM3tRX7obtoC2RZuhkEf7jMb2q6ay46ASnTfNWhulGFmQqxg8x00s3pYwrsn7AEvVMnblvu8ti4ly6AE6+f6IfWWYWsj7UxTRPFuEygPjzoebllwnVev83cd6GNO6deex2NaQbjsvePCatxZu8h30XFJi7eyUTmd28KM1FLlcoKsodrFtxj/6KojDHHOhAoVI5a/Ml9xMFPBqxdyiP7gf2uRNhxSBh4Jkst0wpGC7oVzqOZae7GF1UK0MAHBU7EAgJpndKkccguDSgk2PiEyM5vuq+i7zqr/lsIFKlrWsTrhdBvsuAvc8jB7Fd7fWXu3yKuCUvve1KzorK/xUJq+7SdLwkGoRqmZhc4KcOO3iyoGeLbfheVGU6cupz6rKQ0tpkei+wzUaK+GnLtsRNnjrftOJt8/rs+P9hr/nBxPSLJNlecLYzwK2ufsBIv5k9bOoB2pX11DOz0yM5YdqBAE/CNSy9vYhQ0aF8PevzTFevGyt60o7DNYssx31RyZRQqzIeiQ3FAGuo7v0Es=
